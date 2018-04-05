@@ -1,0 +1,14 @@
+.titulo-pagina {
+    margin-top: -20px;
+    border-bottom: 2px solid #dae0e8 !important;
+    background-color: #ffffff !important;
+}
+
+ .margin1{
+    margin: 1px !important;
+ }
+
+.fotoFundo {
+    background-image: linear-gradient(to left bottom, #22c1c3, #3ccaa2, #7acd73, #bac944, #fdbb2d);
+    /*background: #343a40 url("../img/fundoLogin.jpg") no-repeat center;*/
+}
