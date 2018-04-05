@@ -34,7 +34,6 @@
     </div>';
         }
 
-
         require_once('pages/conexao.php');
 
         $sql = "SELECT * FROM users ";
