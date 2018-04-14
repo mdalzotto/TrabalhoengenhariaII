@@ -4,6 +4,7 @@ try {
     require_once('../conexao.php');
 
     $produtos = array(
+        'id' => $_GET['id'],
         'nome' => $nome = $_POST['nome'],
         'apelido' => $apelido = $_POST['apelido'],
         'ativo' => $ativo = $_POST['ativo'],
@@ -15,15 +16,14 @@ try {
         'cod' => $cod = $_POST['cod_personalizado'],
         'local_estoque' => $local = $_POST['local']);
 
-
-    $sql = "INSERT INTO produtos (nome, apelido_produto, ativo, cod_barras, valor, qtd_estoque, qtd_estoque_min, icms_id, cod_personalizado , local) VALUES ( :nome , :apelido ,:ativo ,  :cod_barras , :valor , :qtd , :qtd_min, :icms, :cod, :local_estoque);";
-
-    $query = $conection->prepare($sql);
+    $update = 'UPDATE produtos SET nome = :nome , apelido_produto = :apelido , ativo = :ativo, cod_barras = :cod_barras, valor = :valor, qtd_estoque = :qtd, qtd_estoque_min = :qtd_min, icms_id= :icms , cod_personalizado= :cod , local= :local_estoque WHERE id = :id';
+    $query = $conection->prepare($update);
+//    var_dump($query);
 
     if ($query->execute($produtos)) {
-        header("Location: index.php?msg=Cadastrado com sucesso!&tipo=success");
+        header("Location: index.php?msg=Registro alterado com sucesso!&tipo=success");
     } else {
-        header("Location: cadastrar.php?msg=Erro ao cadastrar&tipo=danger");
+        header("Location: index.php?msg=Erro ao Alterar $nome &tipo=danger");
     }
 
 } catch (PDOException $ex) {

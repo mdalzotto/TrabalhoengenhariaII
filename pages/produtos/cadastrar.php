@@ -3,19 +3,25 @@ require_once('../conexao.php');
 
 session_start();
 if (!isset($_SESSION['login']) || !isset($_SESSION['senha'])) {
-    header("location: ../../index.php?msg=Faça login para acessar o sistema!&tipo=danger");
+    header("location: ../../index.php?msg=Faça login para acessar o sistema!&tipo=danger ");
     exit;
 }
 
-$sql = "SELECT * FROM produtos";
-$query = $conection->query($sql);
-$produtos = $query->fetchAll();
+$icms = 'SELECT * FROM icms';
+$query = $conection->prepare($icms);
+$query->execute();
+$icm = $query->fetchAll();
 
+$busca = 'select * FROM produtos where id= :id';
+
+$query = $conection->prepare($busca);
+$query->execute(['id' => $_GET['id']]);
+$produto = $query->fetch();
 
 ?>
 
 <!DOCTYPE html>
-<html lang="pt">
+<html>
 
 <head>
     <meta charset="utf-8">
@@ -155,7 +161,7 @@ $produtos = $query->fetchAll();
 </nav>
 <div class="content-wrapper" style="background:#f8f9fa">
     <div class="navbar navbar-light bg-light titulo-pagina">
-        <h1 class="navbar-brand" style="margin-top: 5px;">Produtos</h1>
+        <?php echo '<h1 class="navbar-brand" style="margin-top: 5px;">' . (isset($produto['id']) ? "Editar produto" : "Adicionar produto") . '</h1>'; ?>
     </div>
 
     <?php
@@ -175,49 +181,72 @@ $produtos = $query->fetchAll();
     <div class="container-fluid mt-3">
         <div class="col-sm-12">
 
-            <div class="row">
-                <a class="btn btn-success m-3" href="cadastrar.php"><i class="fa fa-plus"></i> Adicionar Produto</a>
+            <?php echo '<form method="post" action="' . (isset($produto['id']) ? ("alterar.php?id=" . $produto['id']) : "adicionar.php") . '">'; ?>
+            <div class="form-row">
+                <div class="form-group col-md-2">
+                    <label>Ativo</label>
+                    <select type="text" class="form-control" id="ativo" name="ativo" required>
+                        <?php echo '<option value="1" ' . (isset($produto['ativo']) ? ($produto['ativo'] == 1 ? 'selected' : '') : '') . ' >Sim</option>
+                                    <option value="0" ' . (isset($produto['ativo']) ? ($produto['ativo'] == 0 ? 'selected' : '') : '') . ' >Não</option>
+                        </select> '; ?>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label>Nome</label>
+                    <?php echo '<input value="' . (isset($produto['nome']) ? $produto['nome'] : "") . '" type="text" class="form-control" id="nome" name="nome" placeholder="" autocomplete="off" required>'; ?>
+                </div>
+                <div class="form-group col-md-4">
+                    <label>Apelido</label>
+                    <?php echo '<input value="' . (isset($produto['apelido_produto']) ? $produto['apelido_produto'] : "") . '"id="apelido" name="apelido" class="form-control" placeholder="" autocomplete="off" required>'; ?>
+                </div>
             </div>
 
-            <table class="table table-hover table-striped">
-                <thead>
-                <tr>
-                    <th scope="col">Nome</th>
-                    <th scope="col">Quantidade</th>
-                    <th scope="col">Valor</th>
-                    <th scope="col">Ações</th>
-                </tr>
-                </thead>
-                <tbody>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label>Valor</label>
+                    <?php echo '<input value="' . (isset($produto['valor']) ? $produto['valor'] : "") . '" type="text" class="form-control" id="valor" name="valor" placeholder="1,99" autocomplete="off" required>'; ?>
+                </div>
+                <div class="form-group col-md-6">
+                    <label>Codigo de barras</label>
+                    <?php echo '<input value="' . (isset($produto['cod_barras']) ? $produto['cod_barras'] : "") . '" type="text" class="form-control" id="cod_barras" name="cod_barras" placeholder="789654654654" autocomplete="off">'; ?>
+                </div>
+            </div>
 
-                <?php
-                if (!empty($produtos)) {
-                    foreach ($produtos as $produto) {
-                        echo '<tr>';
-                        echo '<td width="45%">' . $produto['nome'] . '</td>';
-                        echo '<td width="15%">' . $produto['qtd_estoque'] . '</td>';
-                        echo '<td width="20%">R$ ' . $produto['valor'] . '</td>';
-                        echo '<td width="20%">
-                        <a class="btn btn-sm btn-primary text-center margin1" href="detathes.php?id=' . $produto['id'] . '">
-                            <span data-toggle="tooltip" title="Detalhes"> &nbsp;<i class="fa fa-info"> </i>&nbsp;</span>
-                        </a>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label>Quantidade</label>
+                    <?php echo '<input value="' . (isset($produto['qtd_estoque']) ? $produto['qtd_estoque'] : "") . '" type="text" class="form-control" id="qtd" name="qtd" placeholder="99" autocomplete="off" required>'; ?>
+                </div>
+                <div class="form-group col-md-6">
+                    <label>Quantidade minima</label>
+                    <?php echo ' <input value="' . (isset($produto['qtd_estoque_min']) ? $produto['qtd_estoque_min'] : "") . '" type="text" class="form-control" id="qtd_min" name="qtd_min" placeholder="0" autocomplete="off"required>'; ?>
+                </div>
+            </div>
 
-                        <a class="btn btn-sm btn-success text-center margin1" href="cadastrar.php?id=' . $produto['id'] . '">
-                            <span data-toggle="tooltip" title="Alterar"> &nbsp;<i class="fa fa-pencil"></i>&nbsp;</span>
-                        </a>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label>Icms Origem</label>
+                    <select type="text" class="form-control" id="icms" name="icms" required>
+                        <?php foreach ($icm as $icmes) {
+                            echo ' <option value="' . $icmes['id_icms_origem'] . '" ' . (isset($produto['icms_id']) ? ($produto['icms_id'] == $icmes['id_icms_origem'] ? 'selected' : '') : '') . '> ' . $icmes['codigo_icms_origem'] . " - " . $icmes['desc_icms_origem'] . ' </option>';
+                        } ?>
+                    </select>
+                </div>
 
-                        <a class="btn btn-sm btn-danger text-center margin1" href="delete.php?id=' . $produto['id'] . '">
-                            <span data-toggle="tooltip" title="Deletar"> &nbsp;<i class="fa fa-close"></i>&nbsp;</span>
-                        </a>
-                    </td>';
-                        echo '</tr>';
-                    }
-                } else {
-                    echo '<tr><td colspan="4" align="center">Nenhum registro encontrado</td></tr>';
-                }
-                ?>
-                </tbody>
-            </table>
+                <div class="form-group col-md-3">
+                    <label>Código personalizado</label>
+                    <?php echo '<input value="' . (isset($produto['cod_personalizado']) ? $produto['cod_personalizado'] : "") . '" type="text" class="form-control" id="cod_personalizado" name="cod_personalizado" placeholder="123" autocomplete="off" required>'; ?>
+                </div>
+                <div class="form-group col-md-3">
+                    <label>Local no estoque</label>
+                    <?php echo '<input value="' . (isset($produto['local']) ? $produto['local'] : "") . '"id="local" name="local" class="form-control" placeholder="Pratileira 01" autocomplete="off" required>'; ?>
+                </div>
+            </div>
+
+            <?php echo ' <button type="submit" class="btn btn-success">' . (isset($produto['id']) ? "Salvar" : "Adicionar") . '</button>'; ?>
+            <a class="btn btn-danger text-light" href="index.php">Cancelar</a>
+            </form>
+
         </div>
     </div>
 

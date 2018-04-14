@@ -103,23 +103,23 @@ if (!isset($_SESSION['login']) || !isset($_SESSION['senha'])) {
             <!--</ul>-->
             <!--</li>-->
 
-<!--            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Adiministrador ">-->
-<!--                <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti"-->
-<!--                   data-parent="#exampleAccordion">-->
-<!--                    <i class="fa fa-fw fa-users"></i>-->
-<!--                    <span class="nav-link-text">Adiministrador</span>-->
-<!--                </a>-->
-<!--                <ul class="sidenav-second-level collapse" id="collapseMulti">-->
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Adiministrador ">
+                <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti"
+                   data-parent="#exampleAccordion">
+                    <i class="fa fa-fw fa-users"></i>
+                    <span class="nav-link-text">Adiministrador</span>
+                </a>
+                <ul class="sidenav-second-level collapse" id="collapseMulti">
 <!--                    <li>-->
 <!--                        <a href="register.html"><i class="fa fa-fw fa-user-plus"></i> Cadastrar</a>-->
 <!--                    </li>-->
-<!---->
-<!--                    <li>-->
-<!--                        <a href="#"><i class="fa fa-fw fa-user-circle"></i> Usuarios</a>-->
-<!--                    </li>-->
-<!--                    <!--<li>-->-->
-<!--                    <!--<a href="#">Second Level Item</a>-->-->
-<!--                    <!--</li>-->-->
+
+                    <li>
+                        <a href="#"><i class="fa fa-fw fa-user-circle"></i> Usuarios</a>
+                    </li>
+                    <!--<li>-->
+                    <!--<a href="#">Second Level Item</a>-->
+                    <!--</li>-->
 <!--                    <li>-->
 <!--                        <a class="nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti2"> <i-->
 <!--                                    class="fa fa-fw fa-archive"></i> Base de dados</a>-->
@@ -135,8 +135,8 @@ if (!isset($_SESSION['login']) || !isset($_SESSION['senha'])) {
 <!--                            </li>-->
 <!--                        </ul>-->
 <!--                    </li>-->
-<!--                </ul>-->
-<!--            </li>-->
+                </ul>
+            </li>
 
         </ul>
 

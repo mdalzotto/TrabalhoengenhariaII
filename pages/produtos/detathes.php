@@ -7,9 +7,11 @@ if (!isset($_SESSION['login']) || !isset($_SESSION['senha'])) {
     exit;
 }
 
-$sql = "SELECT * FROM produtos";
-$query = $conection->query($sql);
-$produtos = $query->fetchAll();
+$busca = 'select * FROM produtos JOIN icms icms ON produtos.icms_id = icms.id_icms_origem where id= :id';
+
+$query = $conection->prepare($busca);
+$query->execute(['id' => $_GET['id']]);
+$produto = $query->fetch();
 
 
 ?>
@@ -155,7 +157,7 @@ $produtos = $query->fetchAll();
 </nav>
 <div class="content-wrapper" style="background:#f8f9fa">
     <div class="navbar navbar-light bg-light titulo-pagina">
-        <h1 class="navbar-brand" style="margin-top: 5px;">Produtos</h1>
+        <h1 class="navbar-brand" style="margin-top: 5px;">Detalhes</h1>
     </div>
 
     <?php
@@ -175,49 +177,64 @@ $produtos = $query->fetchAll();
     <div class="container-fluid mt-3">
         <div class="col-sm-12">
 
+
             <div class="row">
-                <a class="btn btn-success m-3" href="cadastrar.php"><i class="fa fa-plus"></i> Adicionar Produto</a>
+                <a class="btn btn-danger m-3" href="index.php">Voltar</a>
             </div>
-
-            <table class="table table-hover table-striped">
-                <thead>
+            <table class="table table-striped">
                 <tr>
-                    <th scope="col">Nome</th>
-                    <th scope="col">Quantidade</th>
-                    <th scope="col">Valor</th>
-                    <th scope="col">Ações</th>
+                    <td width="30%"><strong>Ativo</strong></td>
+                    <?php echo '<td width="70%">' . ($produto['ativo'] == 1 ? "Sim" : "Não") . '</td>'; ?>
                 </tr>
-                </thead>
-                <tbody>
 
-                <?php
-                if (!empty($produtos)) {
-                    foreach ($produtos as $produto) {
-                        echo '<tr>';
-                        echo '<td width="45%">' . $produto['nome'] . '</td>';
-                        echo '<td width="15%">' . $produto['qtd_estoque'] . '</td>';
-                        echo '<td width="20%">R$ ' . $produto['valor'] . '</td>';
-                        echo '<td width="20%">
-                        <a class="btn btn-sm btn-primary text-center margin1" href="detathes.php?id=' . $produto['id'] . '">
-                            <span data-toggle="tooltip" title="Detalhes"> &nbsp;<i class="fa fa-info"> </i>&nbsp;</span>
-                        </a>
+                <tr>
+                    <td><strong>Nome</strong></td>
+                    <?php echo '<td>' . $produto['nome'] . '</td>'; ?>
+                </tr>
 
-                        <a class="btn btn-sm btn-success text-center margin1" href="cadastrar.php?id=' . $produto['id'] . '">
-                            <span data-toggle="tooltip" title="Alterar"> &nbsp;<i class="fa fa-pencil"></i>&nbsp;</span>
-                        </a>
+                <tr>
+                    <td><strong>Apelido do produto</strong></td>
+                    <?php echo '<td>' . $produto['apelido_produto'] . '</td>'; ?>
+                </tr>
 
-                        <a class="btn btn-sm btn-danger text-center margin1" href="delete.php?id=' . $produto['id'] . '">
-                            <span data-toggle="tooltip" title="Deletar"> &nbsp;<i class="fa fa-close"></i>&nbsp;</span>
-                        </a>
-                    </td>';
-                        echo '</tr>';
-                    }
-                } else {
-                    echo '<tr><td colspan="4" align="center">Nenhum registro encontrado</td></tr>';
-                }
-                ?>
-                </tbody>
+                <tr>
+                    <td><strong>Valor</strong></td>
+                    <?php echo '<td >R$ ' . $produto['valor'] . '</td>'; ?>
+                </tr>
+
+                <tr>
+                    <td><strong>Código de barras</strong></td>
+                    <?php echo '<td>' . $produto['cod_barras'] . '</td>'; ?>
+                </tr>
+
+                <tr>
+                    <td><strong>Quantidade em estoque</strong></td>
+                    <?php echo '<td >' . $produto['qtd_estoque'] . '</td>'; ?>
+                </tr>
+
+                <tr>
+                    <td><strong>Quantidade de estoque mínimo</strong></td>
+                    <?php echo '<td >' . $produto['qtd_estoque_min'] . '</td>'; ?>
+                </tr>
+
+                <tr>
+                    <td><strong>Icms Origem</strong></td>
+                    <?php echo '<td >' . $produto['desc_icms_origem'] . '</td>'; ?>
+                </tr>
+
+                <tr>
+                    <td><strong>Código personalizado</strong></td>
+                    <?php echo '<td >' . $produto['cod_personalizado'] . '</td>'; ?>
+                </tr>
+
+                <tr>
+                    <td><strong>Local no estoque</strong></td>
+                    <?php echo '<td >' . $produto['local'] . '</td>'; ?>
+                </tr>
+
             </table>
+
+
         </div>
     </div>
 
