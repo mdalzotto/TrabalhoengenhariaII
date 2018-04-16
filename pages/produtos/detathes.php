@@ -114,7 +114,7 @@ $produto = $query->fetch();
                     <!--                    </li>-->
 
                     <li>
-                        <a href="#"><i class="fa fa-fw fa-user-circle"></i> Usuarios</a>
+                        <a href="../usuario/index.php"><i class="fa fa-fw fa-user-circle"></i> Usuarios</a>
                     </li>
                     <!--<li>-->
                     <!--<a href="#">Second Level Item</a>-->

@@ -22,11 +22,9 @@
     function validasenha() {
 
         if ((document.getElementById('senha').value) == (document.getElementById('confirmaSenha').value)) {
-            alert('ok');
             return true;
         }
         else {
-            alert('erro');
             document.getElementById("senha").value = "";
             document.getElementById("confirmaSenha").value = "";
             document.getElementById("return").innerHTML = "<div class=\"alert alert-danger alert-dismissible fade show\" role=\"alert\">\n" +
@@ -77,6 +75,8 @@
                             <input class="form-control" name="confirmaSenha" id="confirmaSenha" type="password"
                                    placeholder="123" required>
                         </div>
+                        <input  type="hidden" class="form-control" id="permissao" name="permissao" value="Master" autocomplete="off" required>
+
                     </div>
                 </div>
                 <div id="return"></div>

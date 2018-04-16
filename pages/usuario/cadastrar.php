@@ -3,19 +3,20 @@ require_once('../conexao.php');
 
 session_start();
 if (!isset($_SESSION['login']) || !isset($_SESSION['senha'])) {
-    header("location: ../../index.php?msg=Faça login para acessar o sistema!&tipo=danger");
+    header("location: ../../index.php?msg=Faça login para acessar o sistema!&tipo=danger ");
     exit;
 }
 
-$sql = "SELECT * FROM produtos";
-$query = $conection->query($sql);
-$produtos = $query->fetchAll();
+$busca = 'select * FROM users where id= :id';
 
+$query = $conection->prepare($busca);
+$query->execute(['id' => $_GET['id']]);
+$usuario = $query->fetch();
 
 ?>
 
 <!DOCTYPE html>
-<html lang="pt">
+<html>
 
 <head>
     <meta charset="utf-8">
@@ -32,6 +33,24 @@ $produtos = $query->fetchAll();
     <link href="../../css/custom.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
 </head>
+
+<script>
+    function validasenha() {
+
+        if ((document.getElementById('senha').value) == (document.getElementById('confirmaSenha').value)) {
+            return true;
+        }
+        else {
+            document.getElementById("senha").value = "";
+            document.getElementById("confirmaSenha").value = "";
+            document.getElementById("return").innerHTML = "<div class=\"alert alert-danger alert-dismissible fade show\" role=\"alert\">\n" +
+                "    As senhas devem ser iguais <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>\n" +
+                "</div>\n";
+            return false;
+        }
+    }
+</script>
+
 
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
 <!-- Navigation-->
@@ -54,10 +73,10 @@ $produtos = $query->fetchAll();
                 </a>
             </li>
 
-            <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="Produtos">
-                <a class="nav-link" href="index.php">
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Produtos">
+                <a class="nav-link" href="../produtos/index.php">
                     <i class="fa fa-fw fa-cubes"></i>
-                    <span class="nav-link-text active">Produtos</span>
+                    <span class="nav-link-text">Produtos</span>
                 </a>
             </li>
 
@@ -100,19 +119,19 @@ $produtos = $query->fetchAll();
             <!--</ul>-->
             <!--</li>-->
 
-            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Adiministrador ">
+            <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="Adiministrador ">
                 <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti"
                    data-parent="#exampleAccordion">
                     <i class="fa fa-fw fa-users"></i>
-                    <span class="nav-link-text">Adiministrador</span>
+                    <span class="nav-link-text ">Adiministrador</span>
                 </a>
-                <ul class="sidenav-second-level collapse" id="collapseMulti">
+                <ul class="sidenav-second-level collapse active" id="collapseMulti">
                     <!--                    <li>-->
                     <!--                        <a href="register.html"><i class="fa fa-fw fa-user-plus"></i> Cadastrar</a>-->
                     <!--                    </li>-->
 
                     <li>
-                        <a href="../usuario/index.php"><i class="fa fa-fw fa-user-circle"></i> Usuarios</a>
+                        <a href="index.php"><i class="fa fa-fw fa-user-circle"></i> Usuarios</a>
                     </li>
                     <!--<li>-->
                     <!--<a href="#">Second Level Item</a>-->
@@ -155,7 +174,7 @@ $produtos = $query->fetchAll();
 </nav>
 <div class="content-wrapper" style="background:#f8f9fa">
     <div class="navbar navbar-light bg-light titulo-pagina">
-        <h1 class="navbar-brand" style="margin-top: 5px;">Produtos</h1>
+        <?php echo '<h1 class="navbar-brand" style="margin-top: 5px;">' . (isset($usuario['id']) ? "Editar usuario" : "Adicionar usuario") . '</h1>'; ?>
     </div>
 
     <?php
@@ -175,49 +194,68 @@ $produtos = $query->fetchAll();
     <div class="container-fluid mt-3">
         <div class="col-sm-12">
 
-            <div class="row">
-                <a class="btn btn-success m-3" href="cadastrar.php"><i class="fa fa-plus"></i> Adicionar Produto</a>
+            <!--            <form id="cadastro" method="post" action="addUser.php" onsubmit="return validasenha()">-->
+            <?php echo '<form method="post" action="' . (isset($usuario['id']) ? ("alterar.php?id=" . $usuario['id']) : "adicionar.php") . '" onsubmit="return validasenha()">'; ?>
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <label>Nome<span data-toggle="tooltip" title="Campo obrigatorio"> &nbsp;<i
+                                        style="color: red">*</i>&nbsp;</span></label>
+                        <?php echo '<input value="' . (isset($usuario['nome']) ? $usuario['nome'] : "") . '" type="text" class="form-control" id="nome" name="nome" placeholder="Seu nome" autocomplete="off" required>'; ?>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Sobrenome<span data-toggle="tooltip" title="Campo obrigatorio"> &nbsp;<i
+                                        style="color: red">*</i>&nbsp;</span></label>
+                        <?php echo '<input value="' . (isset($usuario['sobrenome']) ? $usuario['sobrenome'] : "") . '" type="text" class="form-control" id="sobrenome" name="sobrenome" placeholder="Seu sobrenome" autocomplete="off" required>'; ?>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Email<span data-toggle="tooltip" title="Campo obrigatorio"> &nbsp;<i style="color: red">*</i>&nbsp;</span></label>
+                <?php echo '<input value="' . (isset($usuario['email']) ? $usuario['email'] : "") . '" type="email" class="form-control" id="email" name="email" placeholder="Seu email" autocomplete="off" required>'; ?>
+            </div>
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <label>Permissão<span data-toggle="tooltip" title="Campo obrigatorio"> &nbsp;<i
+                                        style="color: red">*</i>&nbsp;</span></label>
+                        <select type="text" class="form-control" id="permissao" name="permissao" required>
+                            <?php echo '<option value="Usuario" ' . (isset($usuario['permissao']) ? ($usuario['permissao'] == 'Usuario' ? 'selected' : '') : '') . ' >Usuario</option>
+                                    <option value="Gerente" ' . (isset($usuario['permissao']) ? ($usuario['permissao'] == 'Gerente' ? 'selected' : '') : '') . ' >Gerente</option>
+                                    <option value="Master"  ' . (isset($usuario['permissao']) ? ($usuario['permissao'] == 'Master' ? 'selected' : '') : '') . ' >Master</option>
+                        </select> '; ?>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Usuario<span data-toggle="tooltip" title="Campo obrigatorio"> &nbsp;<i
+                                        style="color: red">*</i>&nbsp;</span></label>
+                        <?php echo '<input value="' . (isset($usuario['usuario']) ? $usuario['usuario'] : "") . '" type="text" class="form-control" id="user" name="user" placeholder="Escolha um nome de usuario" autocomplete="off" required>'; ?>
+                    </div>
+                </div>
             </div>
 
-            <table class="table table-hover table-striped">
-                <thead>
-                <tr>
-                    <th scope="col">Nome</th>
-                    <th scope="col">Quantidade</th>
-                    <th scope="col">Valor</th>
-                    <th scope="col">Ações</th>
-                </tr>
-                </thead>
-                <tbody>
+            <div class="form-group">
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <label>Senha<span data-toggle="tooltip" title="Campo obrigatorio"> &nbsp;<i
+                                        style="color: red">*</i>&nbsp;</span></label>
+                        <input type="password" class="form-control" id="senha" name="senha" placeholder="123"
+                               autocomplete="off" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Confirme sua senha<span data-toggle="tooltip" title="Campo obrigatorio"> &nbsp;<i
+                                        style="color: red">*</i>&nbsp;</span></label>
+                        <input type="password" class="form-control" id="confirmaSenha" name="confirmaSenha"
+                               placeholder="123" autocomplete="off" onblur="validasenha()" required>
+                    </div>
+                </div>
+            </div>
+            <div id="return"></div>
 
-                <?php
-                if (!empty($produtos)) {
-                    foreach ($produtos as $produto) {
-                        echo '<tr>';
-                        echo '<td width="45%">' . $produto['nome'] . '</td>';
-                        echo '<td width="15%">' . $produto['qtd_estoque'] . '</td>';
-                        echo '<td width="20%">R$ ' . $produto['valor'] . '</td>';
-                        echo '<td width="20%">
-                        <a class="btn btn-sm btn-primary text-center margin1" href="detathes.php?id=' . $produto['id'] . '">
-                            <span data-toggle="tooltip" title="Detalhes"> &nbsp;<i class="fa fa-info"> </i>&nbsp;</span>
-                        </a>
 
-                        <a class="btn btn-sm btn-success text-center margin1" href="cadastrar.php?id=' . $produto['id'] . '">
-                            <span data-toggle="tooltip" title="Alterar"> &nbsp;<i class="fa fa-pencil"></i>&nbsp;</span>
-                        </a>
+            <?php echo ' <button type="submit" class="btn btn-success">' . (isset($usuario['id']) ? "Salvar" : "Adicionar") . '</button>'; ?>
+            <a class="btn btn-danger text-light" href="index.php">Cancelar</a>
+            </form>
 
-                        <a class="btn btn-sm btn-danger text-center margin1" href="delete.php?id=' . $produto['id'] . '">
-                            <span data-toggle="tooltip" title="Deletar"> &nbsp;<i class="fa fa-close"></i>&nbsp;</span>
-                        </a>
-                    </td>';
-                        echo '</tr>';
-                    }
-                } else {
-                    echo '<tr><td colspan="4" align="center">Nenhum registro encontrado</td></tr>';
-                }
-                ?>
-                </tbody>
-            </table>
         </div>
     </div>
 

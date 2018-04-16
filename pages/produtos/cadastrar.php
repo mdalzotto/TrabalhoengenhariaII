@@ -118,7 +118,7 @@ $produto = $query->fetch();
                     <!--                    </li>-->
 
                     <li>
-                        <a href="#"><i class="fa fa-fw fa-user-circle"></i> Usuarios</a>
+                        <a href="../usuario/index.php"><i class="fa fa-fw fa-user-circle"></i> Usuarios</a>
                     </li>
                     <!--<li>-->
                     <!--<a href="#">Second Level Item</a>-->
@@ -184,7 +184,7 @@ $produto = $query->fetch();
             <?php echo '<form method="post" action="' . (isset($produto['id']) ? ("alterar.php?id=" . $produto['id']) : "adicionar.php") . '">'; ?>
             <div class="form-row">
                 <div class="form-group col-md-2">
-                    <label>Ativo</label>
+                    <label>Ativo<span data-toggle="tooltip" title="Campo obrigatorio"> &nbsp;<i style="color: red">*</i>&nbsp;</span></label>
                     <select type="text" class="form-control" id="ativo" name="ativo" required>
                         <?php echo '<option value="1" ' . (isset($produto['ativo']) ? ($produto['ativo'] == 1 ? 'selected' : '') : '') . ' >Sim</option>
                                     <option value="0" ' . (isset($produto['ativo']) ? ($produto['ativo'] == 0 ? 'selected' : '') : '') . ' >Não</option>
@@ -192,40 +192,40 @@ $produto = $query->fetch();
                 </div>
 
                 <div class="form-group col-md-6">
-                    <label>Nome</label>
+                    <label>Nome<span data-toggle="tooltip" title="Campo obrigatorio"> &nbsp;<i style="color: red">*</i>&nbsp;</span></label>
                     <?php echo '<input value="' . (isset($produto['nome']) ? $produto['nome'] : "") . '" type="text" class="form-control" id="nome" name="nome" placeholder="" autocomplete="off" required>'; ?>
                 </div>
                 <div class="form-group col-md-4">
-                    <label>Apelido</label>
+                    <label>Apelido<span data-toggle="tooltip" title="Campo obrigatorio"> &nbsp;<i style="color: red">*</i>&nbsp;</span></label>
                     <?php echo '<input value="' . (isset($produto['apelido_produto']) ? $produto['apelido_produto'] : "") . '"id="apelido" name="apelido" class="form-control" placeholder="" autocomplete="off" required>'; ?>
                 </div>
             </div>
 
             <div class="form-row">
                 <div class="form-group col-md-6">
-                    <label>Valor</label>
+                    <label>Valor<span data-toggle="tooltip" title="Campo obrigatorio"> &nbsp;<i style="color: red">*</i>&nbsp;</span></label>
                     <?php echo '<input value="' . (isset($produto['valor']) ? $produto['valor'] : "") . '" type="text" class="form-control" id="valor" name="valor" placeholder="1,99" autocomplete="off" required>'; ?>
                 </div>
                 <div class="form-group col-md-6">
-                    <label>Codigo de barras</label>
+                    <label>Codigo de barras<span data-toggle="tooltip" title="Campo obrigatorio"> &nbsp;<i style="color: red">*</i>&nbsp;</span></label>
                     <?php echo '<input value="' . (isset($produto['cod_barras']) ? $produto['cod_barras'] : "") . '" type="text" class="form-control" id="cod_barras" name="cod_barras" placeholder="789654654654" autocomplete="off">'; ?>
                 </div>
             </div>
 
             <div class="form-row">
                 <div class="form-group col-md-6">
-                    <label>Quantidade</label>
+                    <label>Quantidade<span data-toggle="tooltip" title="Campo obrigatorio"> &nbsp;<i style="color: red">*</i>&nbsp;</span></label>
                     <?php echo '<input value="' . (isset($produto['qtd_estoque']) ? $produto['qtd_estoque'] : "") . '" type="text" class="form-control" id="qtd" name="qtd" placeholder="99" autocomplete="off" required>'; ?>
                 </div>
                 <div class="form-group col-md-6">
-                    <label>Quantidade minima</label>
+                    <label>Quantidade minima<span data-toggle="tooltip" title="Campo obrigatorio"> &nbsp;<i style="color: red">*</i>&nbsp;</span></label>
                     <?php echo ' <input value="' . (isset($produto['qtd_estoque_min']) ? $produto['qtd_estoque_min'] : "") . '" type="text" class="form-control" id="qtd_min" name="qtd_min" placeholder="0" autocomplete="off"required>'; ?>
                 </div>
             </div>
 
             <div class="form-row">
                 <div class="form-group col-md-6">
-                    <label>Icms Origem</label>
+                    <label>Icms Origem<span data-toggle="tooltip" title="Campo obrigatorio"> &nbsp;<i style="color: red">*</i>&nbsp;</span></label>
                     <select type="text" class="form-control" id="icms" name="icms" required>
                         <?php foreach ($icm as $icmes) {
                             echo ' <option value="' . $icmes['id_icms_origem'] . '" ' . (isset($produto['icms_id']) ? ($produto['icms_id'] == $icmes['id_icms_origem'] ? 'selected' : '') : '') . '> ' . $icmes['codigo_icms_origem'] . " - " . $icmes['desc_icms_origem'] . ' </option>';
@@ -234,11 +234,11 @@ $produto = $query->fetch();
                 </div>
 
                 <div class="form-group col-md-3">
-                    <label>Código personalizado</label>
+                    <label>Código personalizado<span data-toggle="tooltip" title="Campo obrigatorio"> &nbsp;<i style="color: red">*</i>&nbsp;</span></label>
                     <?php echo '<input value="' . (isset($produto['cod_personalizado']) ? $produto['cod_personalizado'] : "") . '" type="text" class="form-control" id="cod_personalizado" name="cod_personalizado" placeholder="123" autocomplete="off" required>'; ?>
                 </div>
                 <div class="form-group col-md-3">
-                    <label>Local no estoque</label>
+                    <label>Local no estoque<span data-toggle="tooltip" title="Campo obrigatorio"> &nbsp;<i style="color: red">*</i>&nbsp;</span></label>
                     <?php echo '<input value="' . (isset($produto['local']) ? $produto['local'] : "") . '"id="local" name="local" class="form-control" placeholder="Pratileira 01" autocomplete="off" required>'; ?>
                 </div>
             </div>

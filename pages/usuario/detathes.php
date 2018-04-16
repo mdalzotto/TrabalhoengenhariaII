@@ -7,9 +7,11 @@ if (!isset($_SESSION['login']) || !isset($_SESSION['senha'])) {
     exit;
 }
 
-$sql = "SELECT * FROM produtos";
-$query = $conection->query($sql);
-$produtos = $query->fetchAll();
+$busca = 'select * FROM users where id= :id';
+
+$query = $conection->prepare($busca);
+$query->execute(['id' => $_GET['id']]);
+$usuarios = $query->fetch();
 
 
 ?>
@@ -54,10 +56,10 @@ $produtos = $query->fetchAll();
                 </a>
             </li>
 
-            <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="Produtos">
-                <a class="nav-link" href="index.php">
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Produtos">
+                <a class="nav-link" href="../produtos/index.php">
                     <i class="fa fa-fw fa-cubes"></i>
-                    <span class="nav-link-text active">Produtos</span>
+                    <span class="nav-link-text">Produtos</span>
                 </a>
             </li>
 
@@ -100,19 +102,19 @@ $produtos = $query->fetchAll();
             <!--</ul>-->
             <!--</li>-->
 
-            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Adiministrador ">
+            <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="Adiministrador ">
                 <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti"
                    data-parent="#exampleAccordion">
                     <i class="fa fa-fw fa-users"></i>
-                    <span class="nav-link-text">Adiministrador</span>
+                    <span class="nav-link-text ">Adiministrador</span>
                 </a>
-                <ul class="sidenav-second-level collapse" id="collapseMulti">
+                <ul class="sidenav-second-level collapse active" id="collapseMulti">
                     <!--                    <li>-->
                     <!--                        <a href="register.html"><i class="fa fa-fw fa-user-plus"></i> Cadastrar</a>-->
                     <!--                    </li>-->
 
                     <li>
-                        <a href="../usuario/index.php"><i class="fa fa-fw fa-user-circle"></i> Usuarios</a>
+                        <a href="index.php"><i class="fa fa-fw fa-user-circle"></i> Usuarios</a>
                     </li>
                     <!--<li>-->
                     <!--<a href="#">Second Level Item</a>-->
@@ -155,7 +157,7 @@ $produtos = $query->fetchAll();
 </nav>
 <div class="content-wrapper" style="background:#f8f9fa">
     <div class="navbar navbar-light bg-light titulo-pagina">
-        <h1 class="navbar-brand" style="margin-top: 5px;">Produtos</h1>
+        <h1 class="navbar-brand" style="margin-top: 5px;">Detalhes</h1>
     </div>
 
     <?php
@@ -175,49 +177,34 @@ $produtos = $query->fetchAll();
     <div class="container-fluid mt-3">
         <div class="col-sm-12">
 
+
             <div class="row">
-                <a class="btn btn-success m-3" href="cadastrar.php"><i class="fa fa-plus"></i> Adicionar Produto</a>
+                <a class="btn btn-danger m-3" href="index.php">Voltar</a>
             </div>
-
-            <table class="table table-hover table-striped">
-                <thead>
+            <table class="table table-striped">
                 <tr>
-                    <th scope="col">Nome</th>
-                    <th scope="col">Quantidade</th>
-                    <th scope="col">Valor</th>
-                    <th scope="col">Ações</th>
+                    <td width="30%"><strong>Nivel de permissão</strong></td>
+                    <?php echo '<td width="70%">' . ($usuarios['permissao'] == "Usuario" ? "Usuário" : (($usuarios['permissao'] == "Gerente" ? "Gerente" :"Master" ))) . '</td>'; ?>
                 </tr>
-                </thead>
-                <tbody>
 
-                <?php
-                if (!empty($produtos)) {
-                    foreach ($produtos as $produto) {
-                        echo '<tr>';
-                        echo '<td width="45%">' . $produto['nome'] . '</td>';
-                        echo '<td width="15%">' . $produto['qtd_estoque'] . '</td>';
-                        echo '<td width="20%">R$ ' . $produto['valor'] . '</td>';
-                        echo '<td width="20%">
-                        <a class="btn btn-sm btn-primary text-center margin1" href="detathes.php?id=' . $produto['id'] . '">
-                            <span data-toggle="tooltip" title="Detalhes"> &nbsp;<i class="fa fa-info"> </i>&nbsp;</span>
-                        </a>
+                <tr>
+                    <td><strong>Nome Completo</strong></td>
+                    <?php echo '<td>' . $usuarios['nome'] .' '. $usuarios['sobrenome'] .  '</td>'; ?>
+                </tr>
 
-                        <a class="btn btn-sm btn-success text-center margin1" href="cadastrar.php?id=' . $produto['id'] . '">
-                            <span data-toggle="tooltip" title="Alterar"> &nbsp;<i class="fa fa-pencil"></i>&nbsp;</span>
-                        </a>
+                <tr>
+                    <td><strong>Email</strong></td>
+                    <?php echo '<td>' . $usuarios['email'] . '</td>'; ?>
+                </tr>
 
-                        <a class="btn btn-sm btn-danger text-center margin1" href="delete.php?id=' . $produto['id'] . '">
-                            <span data-toggle="tooltip" title="Deletar"> &nbsp;<i class="fa fa-close"></i>&nbsp;</span>
-                        </a>
-                    </td>';
-                        echo '</tr>';
-                    }
-                } else {
-                    echo '<tr><td colspan="4" align="center">Nenhum registro encontrado</td></tr>';
-                }
-                ?>
-                </tbody>
+                <tr>
+                    <td><strong>Usuario</strong></td>
+                    <?php echo '<td>' . $usuarios['usuario'] . '</td>'; ?>
+                </tr>
+
             </table>
+
+
         </div>
     </div>
 

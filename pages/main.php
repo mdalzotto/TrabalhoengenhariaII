@@ -115,7 +115,7 @@ if (!isset($_SESSION['login']) || !isset($_SESSION['senha'])) {
 <!--                    </li>-->
 
                     <li>
-                        <a href="#"><i class="fa fa-fw fa-user-circle"></i> Usuarios</a>
+                        <a href="usuario/index.php"><i class="fa fa-fw fa-user-circle"></i> Usuarios</a>
                     </li>
                     <!--<li>-->
                     <!--<a href="#">Second Level Item</a>-->
@@ -273,22 +273,22 @@ if (!isset($_SESSION['login']) || !isset($_SESSION['senha'])) {
                 </div>
             </div>
 
-            <!--            <div class="col-xl-3 col-sm-6 mb-3">-->
-            <!--                <div class="card text-white bg-primary o-hidden h-100">-->
-            <!--                    <div class="card-body">-->
-            <!--                        <div class="card-body-icon">-->
-            <!--                            <i class="fa fa-fw fa-comments"></i>-->
-            <!--                        </div>-->
-            <!--                        <div class="mr-5">26 New Messages!</div>-->
-            <!--                    </div>-->
-            <!--                    <a class="card-footer text-white clearfix small z-1" href="#">-->
-            <!--                        <span class="float-left">View Details</span>-->
-            <!--                        <span class="float-right">-->
-            <!--                <i class="fa fa-angle-right"></i>-->
-            <!--              </span>-->
-            <!--                    </a>-->
-            <!--                </div>-->
-            <!--            </div>-->
+                        <div class="col-xl-3 col-sm-6 mb-3">
+                            <div class="card text-white bg-primary o-hidden h-100">
+                                <div class="card-body">
+                                    <div class="card-body-icon">
+                                        <i class="fa fa-fw fa-user"></i>
+                                    </div>
+                                    <div class="mr-5">Usuario</div>
+                                </div>
+                                <a class="card-footer text-white clearfix small z-1" href="usuario/index.php">
+                                    <span class="float-left">Veja mais</span>
+                                    <span class="float-right">
+                            <i class="fa fa-angle-right"></i>
+                          </span>
+                                </a>
+                            </div>
+                        </div>
             <!--            <div class="col-xl-3 col-sm-6 mb-3">-->
             <!--                <div class="card text-white bg-warning o-hidden h-100">-->
             <!--                    <div class="card-body">-->
