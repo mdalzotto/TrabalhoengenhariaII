@@ -198,9 +198,7 @@ $produtos = $query->fetchAll();
                         echo '<td width="15%">' . $produto['qtd_estoque'] . '</td>';
                         echo '<td width="20%">R$ ' . $produto['valor'] . '</td>';
                         echo '<td width="20%">
-                        <a class="btn btn-sm btn-primary text-center margin1" href="detathes.php?id=' . $produto['id'] . '">
-                            <span data-toggle="tooltip" title="Detalhes"> &nbsp;<i class="fa fa-info"> </i>&nbsp;</span>
-                        </a>
+
 
                         <a class="btn btn-sm btn-success text-center margin1" href="cadastrar.php?id=' . $produto['id'] . '">
                             <span data-toggle="tooltip" title="Alterar"> &nbsp;<i class="fa fa-pencil"></i>&nbsp;</span>

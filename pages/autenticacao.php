@@ -5,7 +5,7 @@ require_once('conexao.php');
 $login = $_POST['login'];
 $senha = $_POST['senha'];
 
-$sql = "SELECT * FROM users WHERE usuario = '$login' and senha =  '$senha';";
+$sql = "SELECT * FROM users WHERE email = '$login' and senha =  '$senha';";
 $result = $conection->query($sql);
 
 if ($result->fetch() == true) {
