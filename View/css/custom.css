@@ -12,3 +12,31 @@
     background-image: linear-gradient(to left bottom, #22c1c3, #3ccaa2, #7acd73, #bac944, #fdbb2d);
     /*background: #343a40 url("../img/fundoLogin.jpg") no-repeat center;*/
 }
+
+.not-show{
+    display: none;
+}
+ .opcoes i{
+     margin-top: 3%;
+}
+
+ .opcoes a{
+     margin: auto;
+     padding: 10px;
+}
+
+ .opcoes, a, a:hover{
+    text-decoration: none;
+     color: #dc3545;
+}
+
+body{
+    font-family: Lato;
+    font-size: 15px;
+}
+
+h3{
+    font-family: Lato;
+    font-weight: 300;
+}
+
