@@ -3,7 +3,7 @@
     <div class="col-sm-12 mt-3">
 
         <div class="mb-3">
-            <a tabindex="0" class="" role="button" data-toggle="popover" data-trigger="focus" title="Esta com duvida para preencher algum campo?" data-content="Preencha os campos ">Precisa de ajuda</a>
+            <a tabindex="0" class="" role="button" data-toggle="popover" data-trigger="focus" title="Esta com duvida para preencher algum campo?" data-content="Os campos que conterem * devem ser preeenchidos obrigatoriamente, para que o cadastro seja concluido.">Precisa de ajuda <span data-toggle="tooltip" title="" data-original-title="Clique aqui para obter ajuda"> &nbsp;<i class="text-primary"><i class="fa fa-info-circle"></i></i>&nbsp;</span></a>
         </div>
 
         <form method="post" action="<?php echo $acaoForm ?>">
@@ -39,10 +39,10 @@
                            autocomplete="off" required>
                 </div>
                 <div class="form-group col-md-3">
-                    <label>Cpf</label>
+                    <label>Cpf <span data-toggle="tooltip" title="Campo obrigatorio"> &nbsp;<i class="text-danger">*</i>&nbsp;</span></label>
                     <input value="<?php if (isset($cliente['cpf'])) echo $cliente['cpf'] ?>" type="text"
                            class="form-control" id="cpf" name="cpf"
-                           placeholder="123.456.789-01" autocomplete="off">
+                           placeholder="123.456.789-01" autocomplete="off" required>
                 </div>
 
                 <div class="form-group col-md-3">
@@ -61,10 +61,10 @@
 
             <div class="form-row tipoJuridico">
                 <div class="form-group col-md-3">
-                    <label>Cnpj</label>
+                    <label>Cnpj <span data-toggle="tooltip" title="Campo obrigatorio"> &nbsp;<i class="text-danger">*</i>&nbsp;</span></label>
                     <input value="<?php if (isset($cliente['cnpj'])) echo $cliente['cnpj'] ?>" id="cnpj"
                            name="cnpj" class="form-control"
-                           placeholder="12.345.678/9012-34" autocomplete="off">
+                           placeholder="12.345.678/9012-34" autocomplete="off" required>
                 </div>
 
                 <div class="form-group col-md-6">
@@ -82,7 +82,7 @@
                 </div>
 
                 <div class="form-group col-md-3">
-                    <label>Inscrição estadual <span data-toggle="tooltip" title="Campo obrigatorio"> &nbsp;<i class="text-danger">*</i>&nbsp;</span></label>
+                    <label>Inscrição estadual <span data-toggle="tooltip" title="Campo obrigatorio"> &nbsp;<i class="text-danger">*</i>&nbsp;</span></label> <span data-toggle="tooltip" title="Caso não possua inscrição estadual, preencha o campo com ISENTO"> &nbsp;<i class="text-primary"><i class="	fa fa-info-circle"></i></i>&nbsp;</span>
                     <input value="<?php if (isset($cliente['ie'])) echo $cliente['ie'] ?>" id="ie"
                            name="ie" class="form-control"
                            placeholder="123.456.789.012" autocomplete="off" required>

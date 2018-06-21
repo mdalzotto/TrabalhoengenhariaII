@@ -3,7 +3,7 @@
     <div class="col-sm-12 mt-3">
 
         <div class="mb-3">
-            <a tabindex="0" class="" role="button" data-toggle="popover" data-trigger="focus" title="Esta com duvida para preencher algum campo?" data-content="Preencha os campos ">Precisa de ajuda</a>
+            <a tabindex="0" class="" role="button" data-toggle="popover" data-trigger="focus" title="Esta com duvida para preencher algum campo?" data-content="Os campos que conterem * devem ser preeenchidos obrigatoriamente, para que o cadastro seja concluido.">Precisa de ajuda <span data-toggle="tooltip" title="" data-original-title="Clique aqui para obter ajuda"> &nbsp;<i class="text-primary"><i class="fa fa-info-circle"></i></i>&nbsp;</span></a>
         </div>
 
         <form method="post" action="<?php echo $acaoForm ?>" onsubmit="return validasenha()">

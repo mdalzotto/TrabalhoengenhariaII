@@ -3,7 +3,7 @@
     <div class="col-sm-12 mt-3">
 
         <div class="mb-3">
-            <a tabindex="0" class="" role="button" data-toggle="popover" data-trigger="focus" title="Esta com duvida para preencher algum campo?" data-content="Preencha os campos ">Precisa de ajuda</a>
+            <a tabindex="0" class="" role="button" data-toggle="popover" data-trigger="focus" title="Esta com duvida para preencher algum campo?" data-content="Os campos que conterem * devem ser preeenchidos obrigatoriamente, para que o cadastro seja concluido.">Precisa de ajuda <span data-toggle="tooltip" title="" data-original-title="Clique aqui para obter ajuda"> &nbsp;<i class="text-primary"><i class="fa fa-info-circle"></i></i>&nbsp;</span></a>
         </div>
 
         <form method="post" action="<?php echo $acaoForm ?>">
@@ -22,7 +22,7 @@
             </div>
 
             <div class="form-group col-md-6">
-                <label>Nome <span data-toggle="tooltip" title="Campo obrigatorio"> &nbsp;<i  class="text-danger">*</i>&nbsp;</span></label>
+                <label>Nome do produto <span data-toggle="tooltip" title="Campo obrigatorio"> &nbsp;<i  class="text-danger">*</i>&nbsp;</span></label>
                 <?php echo '<input value="' . (isset($produto['nome']) ? $produto['nome'] : "") . '" type="text" class="form-control" id="nome" name="nome" placeholder="Nome de produto" autocomplete="off" required>'; ?>
             </div>
             <div class="form-group col-md-4">

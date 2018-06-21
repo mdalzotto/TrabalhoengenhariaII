@@ -20,7 +20,7 @@
     <img class="mb-4" src="View/img/icone.png" alt="" width="72" height="72">
     <h1 class="h3 mb-3 font-weight-normal">SisProd login</h1>
     <label class="sr-only">Login</label>
-    <input type="text" name="login" class="form-control" placeholder="Login" required="" autofocus="">
+    <input type="text" name="login" class="form-control" placeholder="Nome de usuário" required="" autofocus="">
     <label class="sr-only">Senha</label>
     <input type="password" name="senha" class="form-control" placeholder="Senha" required="">
     <div class="checkbox mb-3">

@@ -36,9 +36,15 @@
 
         } catch (exception $e) {
             session_start();
-            $_SESSION['msg'] = 'Erro ao cadastrar ' . $e->getMessage();
-            $_SESSION['tipo'] = "danger";
-            header('location: usuarioController.php?rota=novo');
+            if (isset($e->errorInfo[1]) && $e->errorInfo[1] == '1062') {
+                $_SESSION['msg'] = 'Erro ao cadastrar e-mail ja cadastrado!';
+                $_SESSION['tipo'] = "danger";
+                header('location: usuarioController.php?rota=novo');
+            } else {
+                $_SESSION['msg'] = 'Erro ao cadastrar ' . $e->getMessage();
+                $_SESSION['tipo'] = "danger";
+                header('location: usuarioController.php?rota=novo');
+            }
         }
         exit();
     }
