@@ -133,14 +133,4 @@
         exit();
     }
 
-    //     if ($rota== 'detalhes') {
-    //        $titulo = "Detalhes";
-    //        $id = $_GET['id'];
-    //
-    //        $sql = "SELECT * FROM produtos JOIN icms icms ON produtos.icms_id = icms.id_icms_origem where id_icms_origem = :id and  produtos.id = :id";
-    //        $chave = array('id' => $id);
-    //        $produto = $conection->getRegistro($sql, $chave);
-    //        require_once('../View/base/produto/campos_detalhes.php');
-    //    }
-
 ?>
